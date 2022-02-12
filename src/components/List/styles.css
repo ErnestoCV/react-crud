@@ -1,0 +1,19 @@
+.root {
+  flex-grow: 1;
+}
+
+.menuButton {
+  margin-right: 2px;
+}
+
+.title {
+  flex-grow: 1;
+}
+.container {
+  margin-top: 2px;
+}
+
+.paper {
+  padding: 2px;
+  background-color: red
+}
