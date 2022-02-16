@@ -1,7 +1,11 @@
-import {BrowserRouter as Router} from 'react-router-dom'
+import React from 'react'
+import {BrowserRouter as Router, Routes,Route} from 'react-router-dom'
+
 
 import Navbar from './components/Navbar'
-import UserList from './components/List'
+import ListSite from './components/List'
+import CreateSite from './components/Form'
+import UpdateSite from './components/FormUpdate'
 
 
 function App() {
@@ -10,8 +14,14 @@ function App() {
     <Router>
 
      <Navbar />
-     <UserList />
 
+     <Routes>
+       <Route path="/" element={<ListSite />} />
+       <Route path="/create" element={<CreateSite />} />   
+       <Route path="/update/:id" element={<UpdateSite />} />
+       
+     
+     </Routes>
     </Router>
 
   );
