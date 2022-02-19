@@ -7,7 +7,6 @@ export default function getSites() {
     .then(response => {
         return response
     })
-    .catch(error => console.log(error))
 
 
 }

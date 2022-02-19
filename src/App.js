@@ -3,10 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 
 import Navbar from './components/Navbar'
-import ListSite from './components/List'
-import CreateSite from './components/Form'
-import UpdateSite from './components/FormUpdate'
-
+import Home from './pages/Home'
+import Error from './pages/Error'
+import FormSitePage from './pages/FormSite'
 import "./App.css";
 
 
@@ -19,9 +18,10 @@ function App() {
           <Navbar />
 
           <Routes>
-            <Route path="/" element={<ListSite />} />
-            <Route path="/create" element={<CreateSite />} />
-            <Route path="/update/:id" element={<UpdateSite />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/create" element={<FormSitePage />} />
+            <Route path="/update/:id" element={<FormSitePage />} />
+            <Route path="*" element={<Error />} />
 
 
           </Routes>

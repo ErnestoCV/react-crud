@@ -1,40 +1,22 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React,{useState, useEffect} from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 
 import "./styles.css";
-import { addSite } from "../../services/addSite";
+import {postSite} from "../../services/postSite";
+import {putSite} from '../../services/putSite'
 
-export default function UserCreate() {
-  const navigate = useNavigate();
-
-  /* const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const siteToInsert = {
-      name: name,
-      address: address,
-    };
-
-    addSite(siteToInsert).then(response =>{
-      const {id} = response
-      if(id !== undefined){
-        navigate('/')
-      }else{
-        const {apierror} = response
-        alert(JSON.stringify({apierror}, null, 2))
-      }
-    })
-
-    
-
-  }; */
+export default function FormSite({site}) {
+  
+  const navigate = useNavigate();  
+  const isAddMode = !site.id
 
   const initialValues = {
-    name: "",
-    address: "",
+    id: site.id ?? 0,
+    name: site.name ?? "",
+    address: site.address ?? ""
   };
 
   const validateFields = Yup.object({
@@ -47,53 +29,60 @@ export default function UserCreate() {
   });
 
   const handleSubmit = (values, { setFieldError }) => {
-    return addSite(values)
+    return persist(values)
       .then(() => {
-        navigate('/')
+        navigate("/");
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
         setFieldError("name", "This username is not valid");
         setFieldError("address", "This address is not valid");
       });
   };
 
+  const persist = (values) =>{
+     return isAddMode ? postSite(values) : putSite(values)
+  }
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validateFields}
-      onSubmit={handleSubmit}
-    >
-      {({ errors, isSubmitting }) => (
-        <Form className="form">
-          <label htmlFor="name" className={errors.name ? "error" : ""}>
-            Name
-          </label>
-          <Field
-            className={errors.name ? "error" : ""}
-            id="name"
-            name="name"
-            placeholder="Put here the name"
-          />
-          <ErrorMessage className="form-error" name="name" component="p" />
+      enableReinitialize={true}
+      onSubmit={handleSubmit}>
+      {({ errors, isSubmitting}) => {
 
-          <label htmlFor="address" className={errors.address ? "error" : ""}>
-            Address
-          </label>
-          <Field
-            className={errors.address ? "error" : ""}
-            id="address"
-            name="address"
-            placeholder="Put here the address"
-            type="text"
-          />
-          <ErrorMessage className="form-error" name="address" component="p" />
+        return (
+          <Form className="form">
+            <label htmlFor="name" className={errors.name ? "error" : ""}>
+              Name
+            </label>
+            <Field
+              className={errors.name ? "error" : ""}
+              id="name"
+              name="name"
+              placeholder="Put here the name"
+            />
+            <ErrorMessage className="form-error" name="name" component="p" />
 
-          <button type="submit" disabled={isSubmitting}>
-            Submit
-          </button>
-        </Form>
-      )}
+            <label htmlFor="address" className={errors.address ? "error" : ""}>
+              Address
+            </label>
+            <Field
+              className={errors.address ? "error" : ""}
+              id="address"
+              name="address"
+              placeholder="Put here the address"
+              type="text"
+            />
+            <ErrorMessage className="form-error" name="address" component="p" />
+
+            <button type="submit" disabled={isSubmitting}>
+              Submit
+            </button>
+          </Form>
+        );
+      }}
     </Formik>
   );
 }

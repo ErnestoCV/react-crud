@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react'
 import getSites from '../services/getSites';
 
 
-export default function useGetSites() {
+export default function useSites() {
 
     const [sites, setSites] = useState([]);
-    const [loading, setLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [isError, setIsError] = useState(false)
 
 
     useEffect(() => {
@@ -13,14 +14,18 @@ export default function useGetSites() {
     }, []);
 
     const GetSites = async () => {
-        setLoading(true)
-        await getSites().then(response =>{
+        setIsLoading(true)
+        setIsError(false)
+        await getSites().then(response => {
             setSites(response)
-            setLoading(false)
+            setIsLoading(false)
+        }).catch(() => {
+            setIsLoading(false)
+            setIsError(true)
         })
-        
+
     };
 
-    return { loading, sites }
+    return { sites, isLoading, isError }
 
 }

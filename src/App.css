@@ -43,3 +43,9 @@ body {
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
 }
+
+h1 {
+  color: white;
+  text-align: center;
+  size: 18px;
+}

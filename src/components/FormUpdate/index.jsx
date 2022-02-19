@@ -24,7 +24,7 @@ export default function UserUpdate() {
     event.preventDefault();
     const data = {
       name: name,
-      address: address
+      address: address,
     };
     fetch(`http://localhost:8080/api/sites/${id}`, {
       method: "PUT",
@@ -33,14 +33,14 @@ export default function UserUpdate() {
       },
       body: JSON.stringify(data),
     })
-    .then((response) => {
-      if(response.ok){
-        navigate('/')
-      }else{
-        console.log('Error')
-      }
-    })
-    .catch((error) => console.log(error))
+      .then((response) => {
+        if (response.ok) {
+          navigate("/");
+        } else {
+          console.log("Error");
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   return (

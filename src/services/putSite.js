@@ -1,9 +1,9 @@
 import { API_URL } from "./settings";
 
-export const addSite = ({name, address}) => {
+export const putSite = ({id, name, address}) => {
     
-    return fetch(`${API_URL}/sites`, {
-      method: "POST",
+    return fetch(`${API_URL}/sites/${id}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -11,11 +11,10 @@ export const addSite = ({name, address}) => {
     })
     .then(response => response.json())
     .then(response => {
-        if(response.id === undefined) throw new Error(JSON.stringify(response, null, 2))
+        if(response.id === undefined) {
+          return Promise.reject(response.apierror);
+        }
         return true
     })
 
 };
-
-
-
