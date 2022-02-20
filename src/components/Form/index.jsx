@@ -1,23 +1,20 @@
-import React,{useState, useEffect} from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React from "react"
+import { useNavigate } from "react-router-dom"
 
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
+import { ErrorMessage, Field, Form, Formik } from "formik"
+import * as Yup from "yup"
 
-import "./styles.css";
-import {postSite} from "../../services/postSite";
-import {putSite} from '../../services/putSite'
+import { postSite, putSite } from "../../services/siteServices"
 
-export default function FormSite({site}) {
-  
-  const navigate = useNavigate();  
+export default function FormSite({ site }) {
+  const navigate = useNavigate()
   const isAddMode = !site.id
 
   const initialValues = {
     id: site.id ?? 0,
     name: site.name ?? "",
-    address: site.address ?? ""
-  };
+    address: site.address ?? "",
+  }
 
   const validateFields = Yup.object({
     name: Yup.string()
@@ -26,22 +23,22 @@ export default function FormSite({site}) {
     address: Yup.string()
       .required("Requerid")
       .min(10, "Must be 10 characters or more"),
-  });
+  })
 
   const handleSubmit = (values, { setFieldError }) => {
     return persist(values)
       .then(() => {
-        navigate("/");
+        navigate("/")
       })
       .catch((error) => {
-        console.log(error);
-        setFieldError("name", "This username is not valid");
-        setFieldError("address", "This address is not valid");
-      });
-  };
+        console.log(error)
+        setFieldError("name", "This username is not valid")
+        setFieldError("address", "This address is not valid")
+      })
+  }
 
-  const persist = (values) =>{
-     return isAddMode ? postSite(values) : putSite(values)
+  const persist = (values) => {
+    return isAddMode ? postSite(values) : putSite(values)
   }
 
   return (
@@ -49,9 +46,9 @@ export default function FormSite({site}) {
       initialValues={initialValues}
       validationSchema={validateFields}
       enableReinitialize={true}
-      onSubmit={handleSubmit}>
-      {({ errors, isSubmitting}) => {
-
+      onSubmit={handleSubmit}
+    >
+      {({ errors, isSubmitting }) => {
         return (
           <Form className="form">
             <label htmlFor="name" className={errors.name ? "error" : ""}>
@@ -81,8 +78,8 @@ export default function FormSite({site}) {
               Submit
             </button>
           </Form>
-        );
+        )
       }}
     </Formik>
-  );
+  )
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import getSingleSite from '../services/getSingleSite'
+import { getSingleSite } from '../services/siteServices'
 
 export default function useSingleSite({ id }) {
 
@@ -9,7 +9,7 @@ export default function useSingleSite({ id }) {
 
     useEffect(() => {
 
-        if(id !== undefined){
+        if (id !== undefined) {
             (function () {
                 getSingleSite({ id })
                     .then(site => {
@@ -21,9 +21,9 @@ export default function useSingleSite({ id }) {
                         setIsError(true)
                     })
             }())
-    
+
         }
-        
+
     }, [id])
 
     return { site, isLoading, isError }

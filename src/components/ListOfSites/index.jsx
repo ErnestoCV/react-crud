@@ -1,13 +1,12 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { deleteSite } from "../../services/deleteSite"
+import { deleteSite } from "../../services/siteServices"
 
 import {
   Container,
   Paper,
   Box,
-  Typography,
   Button,
   TableContainer,
   Table,
@@ -26,7 +25,7 @@ export default function ListOfSites({ sites }) {
   const [currentSites, setCurrentSites] = useState(sites)
 
   const UpdateSite = (id) => {
-    navigate("/update/" + id)
+    navigate("/updateSite/" + id)
   }
 
   const DeleteSite = (id) => {
@@ -41,14 +40,6 @@ export default function ListOfSites({ sites }) {
 
   return (
     <>
-      <div>
-        <h1>List of Sites</h1>
-
-        <Button href="/create" variant="contained" color="primary">
-          CREATE
-        </Button>
-      </div>
-
       {currentSites.length === 0 ? (
         <h1>Nothing to show</h1>
       ) : (

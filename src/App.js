@@ -6,6 +6,7 @@ import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Error from './pages/Error'
 import FormSitePage from './pages/FormSite'
+import FormAccountPage from './pages/FormAccount'
 import "./App.css";
 
 
@@ -19,8 +20,9 @@ function App() {
 
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/create" element={<FormSitePage />} />
-            <Route path="/update/:id" element={<FormSitePage />} />
+            <Route path="/createSite" element={<FormSitePage />} />
+            <Route path="/updateSite/:id" element={<FormSitePage />} />
+            <Route path="/createAccount/" element={<FormAccountPage />} />
             <Route path="*" element={<Error />} />
 
 

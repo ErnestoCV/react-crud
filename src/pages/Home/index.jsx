@@ -1,6 +1,8 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
 
+import { Button } from "@mui/material"
+
 import useSites from "../../hooks/useSites"
 import Spinner from "../../components/Spinner"
 import ListOfSites from "../../components/ListOfSites"
@@ -19,6 +21,22 @@ export default function Home() {
 
   return (
     <>
+      <div>
+        <h1>List of Sites</h1>
+
+        <Button
+          href="/createSite"
+          variant="contained"
+          color="primary"
+          sx={{ mr: 2 }}
+        >
+          CREATE SITE
+        </Button>
+
+        <Button href="/createAccount" variant="contained" color="primary">
+          CREATE ACCOUNT
+        </Button>
+      </div>
       <ListOfSites sites={sites} />
     </>
   )
