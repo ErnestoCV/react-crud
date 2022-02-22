@@ -10,8 +10,10 @@ export default function useSingleSite({ id }) {
     useEffect(() => {
 
         if (id !== undefined) {
-            (function () {
-                getSingleSite({ id })
+            (async function () {
+                setIsLoading(true)
+                setIsError(false)
+                await getSingleSite({ id })
                     .then(site => {
                         setSite(site)
                         setIsLoading(false)
@@ -21,6 +23,7 @@ export default function useSingleSite({ id }) {
                         setIsError(true)
                     })
             }())
+
 
         }
 

@@ -3,20 +3,22 @@ import { ErrorMessage } from "@hookform/error-message"
 
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
+import { postAccount } from "../../services/accountService"
 
-const initialValues = { user: "", password: "", id: 1 }
+const initialValues = { user: "", password: "", idSite: 1 }
 
 const schema = yup
   .object({
     user: yup.string().required("User required"),
     password: yup.string().required("Password required"),
-    id: yup.string().required("Site required"),
+    idSite: yup.string().required("Site required"),
   })
   .required()
 
 export const FormAccount = ({ sites }) => {
   const {
     register,
+    setError,
     formState: { errors },
     handleSubmit,
   } = useForm({
@@ -25,7 +27,14 @@ export const FormAccount = ({ sites }) => {
   })
 
   const onSubmit = (data) => {
-    console.log(data)
+    postAccount(data)
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) => {
+        console.log(error)
+        setError("user", { message: " Invalid user" })
+      })
   }
 
   return (
@@ -35,7 +44,7 @@ export const FormAccount = ({ sites }) => {
       ) : (
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <label>Site</label>
-          <select {...register("id")}>
+          <select {...register("idSite")}>
             {sites.map((site) => (
               <option key={site.id} value={site.id}>
                 {site.name}
@@ -43,7 +52,11 @@ export const FormAccount = ({ sites }) => {
             ))}
           </select>
 
-          {errors.id && <p>{errors.id.message}</p>}
+          <ErrorMessage
+            errors={errors}
+            name="idSite"
+            render={({ message }) => <p>{message}</p>}
+          />
 
           <label>User</label>
           <input {...register("user")} />

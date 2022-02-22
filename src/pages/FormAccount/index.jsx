@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 
 import useSites from "../../hooks/useSites"
-import { FormAccount } from "../../components/FormAccount"
+import { FormAccount } from "../../components/Form/FormAccount"
 import Spinner from "../../components/Spinner"
 
 export default function FormAccountPage() {

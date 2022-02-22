@@ -1,11 +1,11 @@
 import React from "react"
 import { useParams, useNavigate } from "react-router-dom"
 
-import FormSite from "../../components/Form/FormSite"
-import Spinner from "../../components/Spinner"
 import useSingleSite from "../../hooks/useSingleSite"
+import Spinner from "../../components/Spinner"
+import ListOfAccounts from "../../components/ListOfAccounts"
 
-export default function FormSitePage() {
+export default function ListOfAccountsPage() {
   const { id } = useParams()
   const { site, isLoading, isError } = useSingleSite({ id })
   const navigate = useNavigate()
@@ -20,7 +20,9 @@ export default function FormSitePage() {
 
   return (
     <>
-      <FormSite site={site} />
+      <h1>List of Accounts</h1>
+
+      {<ListOfAccounts site={site} idSite={id} />}
     </>
   )
 }

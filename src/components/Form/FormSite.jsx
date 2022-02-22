@@ -30,8 +30,7 @@ export default function FormSite({ site }) {
       .then(() => {
         navigate("/")
       })
-      .catch((error) => {
-        console.log(error)
+      .catch(() => {
         setFieldError("name", "This username is not valid")
         setFieldError("address", "This address is not valid")
       })

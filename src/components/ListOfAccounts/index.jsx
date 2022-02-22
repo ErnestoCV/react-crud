@@ -1,8 +1,6 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { deleteSite } from "../../services/siteServices"
-
 import {
   Container,
   Paper,
@@ -17,34 +15,31 @@ import {
   Avatar,
   ButtonGroup,
 } from "@mui/material"
+import { deleteAccount } from "../../services/accountService"
 
-import "./styles.css"
-
-export default function ListOfSites({ sites }) {
+export default function ListOfAccounts({ idSite, site: { accounts } }) {
   const navigate = useNavigate()
-  const [currentSites, setCurrentSites] = useState(sites)
+  const [currentAccounts, setCurrentAccounts] = useState(accounts)
 
-  const handleUpdateSiteClick = (id) => {
-    navigate("/updateSite/" + id)
+  const handleUpdateAccountClick = (id) => {
+    navigate(`/updateAccount/${id}`)
   }
 
-  const handleDeleteSiteClick = (id) => {
-    deleteSite({ id })
+  const handleDeleteAccountClick = (idAccount) => {
+    deleteAccount({ idSite, idAccount })
       .then(() => {
-        setCurrentSites(currentSites.filter((site) => site.id !== id))
+        setCurrentAccounts(
+          currentAccounts.filter((account) => account.id !== idAccount)
+        )
       })
       .catch((error) => {
         console.log(error)
       })
   }
 
-  const handleShowAccountClick = (id) => {
-    navigate(`/sites/${id}/accounts`)
-  }
-
   return (
     <>
-      {currentSites.length === 0 ? (
+      {currentAccounts === undefined || currentAccounts.length === 0 ? (
         <h1>Nothing to show</h1>
       ) : (
         <Container className="container" maxWidth="lg">
@@ -55,44 +50,37 @@ export default function ListOfSites({ sites }) {
                   <TableRow>
                     <TableCell align="right">ID</TableCell>
                     <TableCell align="center">Avatar</TableCell>
-                    <TableCell align="left">Name</TableCell>
-                    <TableCell align="left">Address</TableCell>
+                    <TableCell align="left">User</TableCell>
+                    <TableCell align="left">Password</TableCell>
                     <TableCell align="center">Action</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {currentSites.map((site) => (
-                    <TableRow key={site.id}>
-                      <TableCell align="right">{site.id}</TableCell>
+                  {currentAccounts.map((account) => (
+                    <TableRow key={account.id}>
+                      <TableCell align="right">{account.id}</TableCell>
                       <TableCell align="center">
                         <Box display="flex" justifyContent="center">
                           <Avatar />
                         </Box>
                       </TableCell>
-                      <TableCell align="left">{site.name}</TableCell>
-                      <TableCell align="left">{site.address}</TableCell>
+                      <TableCell align="left">{account.user}</TableCell>
+                      <TableCell align="left">{account.password}</TableCell>
                       <TableCell align="center">
                         <ButtonGroup
                           color="primary"
                           aria-label="outlined primary button group"
                         >
                           <Button
-                            onClick={() => handleUpdateSiteClick(site.id)}
+                            onClick={() => handleUpdateAccountClick(account.id)}
                           >
                             Edit
                           </Button>
                           <Button
-                            onClick={() => handleDeleteSiteClick(site.id)}
+                            onClick={() => handleDeleteAccountClick(account.id)}
                           >
                             Del
                           </Button>
-                          {site.accounts.length !== 0 && (
-                            <Button
-                              onClick={() => handleShowAccountClick(site.id)}
-                            >
-                              Users
-                            </Button>
-                          )}
                         </ButtonGroup>
                       </TableCell>
                     </TableRow>
